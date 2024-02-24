@@ -10,11 +10,14 @@ public class Jugador : MonoBehaviour
     public GameObject suelo;
     public float velocidad = 7.0f;
     public GameObject estrella; // Añadir la estrella
+    public Text contador;
+    public AudioSource sonidoEstrella;
     // privada
     private Vector3 offset;
     private Vector3 DireccionActual;
     private float valX, valZ;
     private Rigidbody rb;
+    private int puntos = 0;
 
 
     // Start is called before the first frame update
@@ -92,7 +95,10 @@ public class Jugador : MonoBehaviour
         // Estrella pequeña
         if (other.gameObject.CompareTag("Estrella"))
         {
-            Destroy(other.gameObject);           
+            Destroy(other.gameObject);        
+            puntos += 1;
+            sonidoEstrella.PlayOneShot(sonidoEstrella.clip);
+            contador.text = "Puntos: " + puntos;   
         }
     }
 
