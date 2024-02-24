@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Jugador : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Jugador : MonoBehaviour
     private float valX, valZ;
     private Rigidbody rb;
     private int puntos = 0;
+    private int resetHeight = -10;
 
 
     // Start is called before the first frame update
@@ -32,6 +34,11 @@ public class Jugador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y < resetHeight)
+        {
+            SceneManager.LoadScene("Gameover");
+            
+        }
         camara.transform.position = transform.position + offset;
         if(Input.GetKeyDown(KeyCode.Space))
         {

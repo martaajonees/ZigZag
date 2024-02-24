@@ -5313,6 +5313,7 @@ MonoBehaviour:
   estrella: {fileID: 866362321}
   contador: {fileID: 675292788}
   sonidoEstrella: {fileID: 1841235411}
+  contVidas: {fileID: 0}
 --- !u!1 &866362321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5989dbd79169d49d39c0e61ffa941d78, type: 3}
