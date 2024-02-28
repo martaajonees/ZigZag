@@ -13,6 +13,8 @@ public class Jugador : MonoBehaviour
     public GameObject estrella; // Añadir la estrella
     public Text contador;
     public AudioSource sonidoEstrella;
+    public int vidas = 3;
+    public Text contadorVidas;
     // privada
     private Vector3 offset;
     private Vector3 DireccionActual;
@@ -29,6 +31,7 @@ public class Jugador : MonoBehaviour
         offset = camara.transform.position - transform.position;
         crearSueloInicial();
         DireccionActual = Vector3.forward;
+        ActualizarContadorVidas();
     }
 
     // Update is called once per frame
@@ -36,13 +39,18 @@ public class Jugador : MonoBehaviour
     {
         if (transform.position.y < resetHeight)
         {
-            SceneManager.LoadScene("Gameover");
-            
+            PerderVida();
         }
         camara.transform.position = transform.position + offset;
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        if (horizontalInput != 0 || verticalInput != 0)
+        {
+            CambiarDireccion(horizontalInput, verticalInput);
+        }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            CambiarDireccion();
+            CambiarDireccion2();
         }
         transform.Translate(DireccionActual * velocidad * Time.deltaTime);
     }
@@ -85,7 +93,7 @@ public class Jugador : MonoBehaviour
         }
     }
 
-    void CambiarDireccion()
+    void CambiarDireccion2()
     {
         if(DireccionActual == Vector3.forward)
         {
@@ -96,7 +104,42 @@ public class Jugador : MonoBehaviour
             DireccionActual = Vector3.forward;
         }
     }
-    
+
+
+    void CambiarDireccion(float horizontalInput, float verticalInput)
+    {
+        // Definir direcciones basadas en las teclas de flecha
+        Vector3 direccionDeseada = Vector3.zero;
+        if (horizontalInput > 0)
+        {
+            direccionDeseada += Vector3.right;
+        }
+        else if (horizontalInput < 0)
+        {
+            direccionDeseada += -Vector3.right;
+        }
+
+        if (verticalInput > 0)
+        {
+            direccionDeseada += Vector3.forward;
+        }
+        else if (verticalInput < 0)
+        {
+            direccionDeseada += -Vector3.forward;
+        }
+
+        // Normalizar la dirección deseada para evitar movimientos más rápidos en diagonal
+        if (direccionDeseada != Vector3.zero)
+        {
+            direccionDeseada.Normalize();
+        }
+
+        // Actualizar la dirección actual solo si se ha presionado alguna tecla de dirección
+        if (direccionDeseada != Vector3.zero)
+        {
+            DireccionActual = direccionDeseada;
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         // Estrella pequeña
@@ -109,5 +152,19 @@ public class Jugador : MonoBehaviour
         }
     }
 
+    void ActualizarContadorVidas()  
+    {
+        contadorVidas.text = "Vidas: " + vidas.ToString();
+    }
+
+    public void PerderVida()
+    {
+        vidas--;
+        ActualizarContadorVidas();
+        if(vidas <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+    }
     
 }
