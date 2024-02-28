@@ -8,6 +8,7 @@ public class Rotation : MonoBehaviour
     public GameObject starPrefab;
     public int num_estrellas = 30;
     public float radio = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class Rotation : MonoBehaviour
     {
         for (int i = 0; i < num_estrellas; i++)
         {
-            Vector3 randomPosition = Random.insideUnitSphere * radio;
+            Vector3 randomPosition = Random.onUnitSphere * radio;
             randomPosition.y = 0f; // Asegura que las estrellas estén en el mismo plano que el suelo
             Instantiate(starPrefab, randomPosition, Quaternion.identity);
         }

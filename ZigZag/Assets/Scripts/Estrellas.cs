@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Estrellas : MonoBehaviour
+public class StarGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Puntos que representan el camino
+
+     // Espaciado entre estrellas
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }
