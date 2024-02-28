@@ -7,6 +7,7 @@ public class AsignadorSalir : MonoBehaviour
 
     void Start()
     {
+        
         botonSalir.onClick.AddListener(Salir);
     }
     
