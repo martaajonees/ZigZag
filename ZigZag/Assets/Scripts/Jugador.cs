@@ -4,44 +4,44 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
 public class Jugador : MonoBehaviour
 {
-    // publica
     public Camera camara;
     public GameObject suelo;
     public float velocidad = 7.0f;
-    public GameObject estrella; // Añadir la estrella
-    public Text contador;
+    public GameObject estrella;
+    public Text contadorPuntos;
     public AudioSource sonidoEstrella;
     public int vidas = 3;
     public Text contadorVidas;
-    // privada
     private Vector3 offset;
     private Vector3 DireccionActual;
     private float valX, valZ;
     private Rigidbody rb;
     private int puntos = 0;
-    private int resetHeight = -10;
+    private int resetHeight = -1;
+    private Vector3 posicionInicial; // Guarda la posición inicial del jugador
 
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         offset = camara.transform.position - transform.position;
         crearSueloInicial();
         DireccionActual = Vector3.forward;
+        posicionInicial = transform.position; // Guarda la posición inicial
         ActualizarContadorVidas();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < resetHeight)
+        camara.transform.position = transform.position + offset;
+        if(transform.position.y < resetHeight)
         {
             PerderVida();
+            transform.position = posicionInicial;
         }
-        camara.transform.position = transform.position + offset;
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         if (horizontalInput != 0 || verticalInput != 0)
@@ -52,22 +52,33 @@ public class Jugador : MonoBehaviour
         {
             CambiarDireccion2();
         }
+
         transform.Translate(DireccionActual * velocidad * Time.deltaTime);
     }
 
-    private void OnCollisionExit(Collision other) 
+    private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Suelo")
+        if (other.gameObject.tag == "Suelo")
         {
-           StartCoroutine(BorrarSuelo(other.gameObject));
+            Debug.Log("El jugador ha salido del suelo.");
+            PerderVida();
+            transform.position = posicionInicial; // Resetear al punto inicial
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Suelo")
+        {
+            StartCoroutine(BorrarSuelo(other.gameObject));
         }
     }
 
     IEnumerator BorrarSuelo(GameObject suelo)
     {
         float aleatorio = Random.Range(0.0f, 1.0f);
-        
-        if(aleatorio > 0.5f)
+
+        if (aleatorio > 0.5f)
         {
             valX += 6.0f;
         }
@@ -108,7 +119,6 @@ public class Jugador : MonoBehaviour
 
     void CambiarDireccion(float horizontalInput, float verticalInput)
     {
-        // Definir direcciones basadas en las teclas de flecha
         Vector3 direccionDeseada = Vector3.zero;
         if (horizontalInput > 0)
         {
@@ -128,31 +138,24 @@ public class Jugador : MonoBehaviour
             direccionDeseada += -Vector3.forward;
         }
 
-        // Normalizar la dirección deseada para evitar movimientos más rápidos en diagonal
-        if (direccionDeseada != Vector3.zero)
-        {
-            direccionDeseada.Normalize();
-        }
-
-        // Actualizar la dirección actual solo si se ha presionado alguna tecla de dirección
         if (direccionDeseada != Vector3.zero)
         {
             DireccionActual = direccionDeseada;
         }
     }
+
     void OnTriggerEnter(Collider other)
     {
-        // Estrella pequeña
         if (other.gameObject.CompareTag("Estrella"))
         {
-            Destroy(other.gameObject);        
+            Destroy(other.gameObject);
             puntos += 1;
             sonidoEstrella.PlayOneShot(sonidoEstrella.clip);
-            contador.text = "Puntos: " + puntos;   
+            contadorPuntos.text = "Puntos: " + puntos;
         }
     }
 
-    void ActualizarContadorVidas()  
+    void ActualizarContadorVidas()
     {
         contadorVidas.text = "Vidas: " + vidas.ToString();
     }
@@ -161,10 +164,9 @@ public class Jugador : MonoBehaviour
     {
         vidas--;
         ActualizarContadorVidas();
-        if(vidas <= 0)
+        if (vidas <= 0)
         {
             SceneManager.LoadScene("GameOver");
         }
     }
-    
 }
