@@ -9,6 +9,7 @@ public class ManejadorSuelo : MonoBehaviour
     private Vector3 posicionInicial;
     private float valX, valZ;
     public GameObject estrella;
+    public GameObject estrella2;
 
     void Start()
     {
@@ -49,9 +50,11 @@ public class ManejadorSuelo : MonoBehaviour
         if (aleatorio > 0.5f)
         {
             valX += 6.0f;
+            Instantiate(estrella2, new Vector3(valX, 1, valZ+2f), Quaternion.Euler(90, 0, 0));
         } else
         {
             valZ += 6.0f;
+            Instantiate(estrella2, new Vector3(valX+2f, 1, valZ), Quaternion.Euler(90, 0, 0));
         }
         Instantiate(DestruirSuelo, new Vector3(valX, 0, valZ), Quaternion.identity);
         Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));

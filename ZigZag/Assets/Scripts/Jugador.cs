@@ -9,17 +9,12 @@ public class Jugador : MonoBehaviour
 {
     // publico
     public Camera camara;
-    public GameObject suelo;
     public float velocidad = 7.0f;
-    public GameObject estrella;
     public Text contadorPuntos;
     public AudioSource sonidoEstrella;
-    public int vidas = 3;
-    public Text contadorVidas;
     // privado
     private Vector3 offset;
     private Vector3 DireccionActual;
-    private float valX, valZ;
     private Rigidbody rb;
     private int puntos = 0;
     private int resetHeight = -10;
@@ -30,7 +25,7 @@ public class Jugador : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         offset = camara.transform.position - transform.position;
         posicionInicial = transform.position; // Guarda la posición inicial
-        ActualizarContadorVidas();
+
     }
 
     void Update()
@@ -106,21 +101,21 @@ public class Jugador : MonoBehaviour
             puntos += 1;
             sonidoEstrella.PlayOneShot(sonidoEstrella.clip);
             contadorPuntos.text = "Puntos: " + puntos;
+        
+        } else if (other.gameObject.CompareTag("Estrella2"))
+        {
+            Destroy(other.gameObject);
+            puntos += 3;
+            sonidoEstrella.PlayOneShot(sonidoEstrella.clip);
+            contadorPuntos.text = "Puntos: " + puntos;
         }
-    }
 
-    void ActualizarContadorVidas()
-    {
-        contadorVidas.text = "Vidas: " + vidas.ToString();
     }
 
     public void PerderVida()
     {
-        vidas--;
-        ActualizarContadorVidas();
-        if (vidas <= 0)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+       
+        SceneManager.LoadScene("GameOver");
     }
+    
 }
