@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 771958205}
   - component: {fileID: 771958204}
   - component: {fileID: 771958209}
+  - component: {fileID: 771958210}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -486,6 +487,20 @@ MonoBehaviour:
   sonidoEstrella: {fileID: 1841235411}
   vidas: 3
   contadorVidas: {fileID: 1972145060}
+--- !u!114 &771958210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771958203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094f5e25cfb9b4ed584fcde9c751195b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suelo: {fileID: 429421887597387103, guid: f5822f547075e4fb19f65dcb8d6e7552, type: 3}
+  estrella: {fileID: 1299439217453486893, guid: 8724cf6d9e7514c1aa6f99cdd1652ca0, type: 3}
 --- !u!1 &867669825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,7 +1061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -289, y: 73}
+  m_AnchoredPosition: {x: -225, y: 165}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972145060
@@ -1103,14 +1118,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Suelo
       objectReference: {fileID: 0}
-    - target: {fileID: 429421887597387103, guid: f5822f547075e4fb19f65dcb8d6e7552, type: 3}
-      propertyPath: m_TagString
-      value: Suelo
-      objectReference: {fileID: 0}
-    - target: {fileID: 1316641392685177896, guid: f5822f547075e4fb19f65dcb8d6e7552, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e3884769ac82e4e1782d0aec0e7eac55, type: 2}
     - target: {fileID: 8293386950976769913, guid: f5822f547075e4fb19f65dcb8d6e7552, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

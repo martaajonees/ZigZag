@@ -22,15 +22,13 @@ public class Jugador : MonoBehaviour
     private float valX, valZ;
     private Rigidbody rb;
     private int puntos = 0;
-    private int resetHeight = -1;
+    private int resetHeight = -10;
     private Vector3 posicionInicial; // Guarda la posición inicial del jugador
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         offset = camara.transform.position - transform.position;
-        crearSueloInicial();
-        DireccionActual = Vector3.forward;
         posicionInicial = transform.position; // Guarda la posición inicial
         ActualizarContadorVidas();
     }
@@ -46,68 +44,18 @@ public class Jugador : MonoBehaviour
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        // Si el jugador presiona alguna tecla de movimiento
         if (horizontalInput != 0 || verticalInput != 0)
         {
             CambiarDireccion(horizontalInput, verticalInput);
         }
+        // Si el jugador presiona la barra espaciadora
         if(Input.GetKeyDown(KeyCode.Space))
         {
             CambiarDireccion2();
         }
 
         transform.Translate(DireccionActual * velocidad * Time.deltaTime);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Suelo")
-        {
-            Debug.Log("El jugador ha salido del suelo.");
-            PerderVida();
-            transform.position = posicionInicial; // Resetear al punto inicial
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.tag == "Suelo")
-        {
-            StartCoroutine(BorrarSuelo(other.gameObject));
-        }
-    }
-
-    IEnumerator BorrarSuelo(GameObject suelo)
-    {
-        float aleatorio = Random.Range(0.0f, 1.0f);
-
-        if (aleatorio <= 0.3f)
-        {
-            valX += 6.0f;
-        }
-        else if (aleatorio < 0.6f && aleatorio > 0.3f)
-        {
-            valX -= 6.0f;
-        }
-        else
-        {
-            valZ += 6.0f;
-        }
-        GameObject newsuelo = Instantiate(suelo, new Vector3(valX, 0, valZ), Quaternion.identity);
-        Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));
-        yield return new WaitForSeconds(8);
-        newsuelo.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        newsuelo.gameObject.GetComponent<Rigidbody>().useGravity = true;
-        yield return new WaitForSeconds(8);
-        Destroy(newsuelo);
-    }
-
-    void crearSueloInicial()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            valZ += 6.0f;
-            Instantiate(suelo, new Vector3(valX, 0, valZ), Quaternion.identity);
-        }
     }
 
     void CambiarDireccion2()
