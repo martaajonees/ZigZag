@@ -480,7 +480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camara: {fileID: 556004483}
   suelo: {fileID: 1267236698}
-  velocidad: 5
+  velocidad: 8
   estrella: {fileID: 1299439217453486893, guid: 8724cf6d9e7514c1aa6f99cdd1652ca0, type: 3}
   contadorPuntos: {fileID: 675292788}
   sonidoEstrella: {fileID: 1841235411}

@@ -80,9 +80,13 @@ public class Jugador : MonoBehaviour
     {
         float aleatorio = Random.Range(0.0f, 1.0f);
 
-        if (aleatorio > 0.5f)
+        if (aleatorio <= 0.3f)
         {
             valX += 6.0f;
+        }
+        else if (aleatorio < 0.6f && aleatorio > 0.3f)
+        {
+            valX -= 6.0f;
         }
         else
         {
@@ -90,7 +94,7 @@ public class Jugador : MonoBehaviour
         }
         GameObject newsuelo = Instantiate(suelo, new Vector3(valX, 0, valZ), Quaternion.identity);
         Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(8);
         newsuelo.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         newsuelo.gameObject.GetComponent<Rigidbody>().useGravity = true;
         yield return new WaitForSeconds(8);
