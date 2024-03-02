@@ -46,18 +46,23 @@ public class ManejadorSuelo : MonoBehaviour
     IEnumerator BorrarSuelo(GameObject DestruirSuelo)
     {
         float aleatorio = Random.Range(0.0f, 1.0f);
+        float estrella_aleatoria = Random.Range(0.0f, 1.0f);
+        float estrella_aleatoria2 = Random.Range(0.0f, 1.0f);
 
         if (aleatorio > 0.5f)
         {
             valX += 6.0f;
-            Instantiate(estrella2, new Vector3(valX, 1, valZ+2f), Quaternion.Euler(90, 0, 0));
+            if (estrella_aleatoria > 0.6f)
+                Instantiate(estrella2, new Vector3(valX, 1, valZ+2f), Quaternion.Euler(90, 0, 0));
         } else
         {
             valZ += 6.0f;
+            if (estrella_aleatoria > 0.6f)
             Instantiate(estrella2, new Vector3(valX+2f, 1, valZ), Quaternion.Euler(90, 0, 0));
         }
         Instantiate(DestruirSuelo, new Vector3(valX, 0, valZ), Quaternion.identity);
-        Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));
+        if (estrella_aleatoria2 >= 0.5f)
+            Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));
         yield return new WaitForSeconds(10f);
         DestruirSuelo.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         DestruirSuelo.gameObject.GetComponent<Rigidbody>().useGravity = true;
