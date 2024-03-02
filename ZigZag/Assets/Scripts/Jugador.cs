@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Jugador : MonoBehaviour
 {
+    // publico
     public Camera camara;
     public GameObject suelo;
     public float velocidad = 7.0f;
@@ -15,6 +16,7 @@ public class Jugador : MonoBehaviour
     public AudioSource sonidoEstrella;
     public int vidas = 3;
     public Text contadorVidas;
+    // privado
     private Vector3 offset;
     private Vector3 DireccionActual;
     private float valX, valZ;
@@ -86,13 +88,13 @@ public class Jugador : MonoBehaviour
         {
             valZ += 6.0f;
         }
-        Instantiate(suelo, new Vector3(valX, 0, valZ), Quaternion.identity);
+        GameObject newsuelo = Instantiate(suelo, new Vector3(valX, 0, valZ), Quaternion.identity);
         Instantiate(estrella, new Vector3(valX, 1, valZ), Quaternion.Euler(90, 0, 0));
         yield return new WaitForSeconds(4);
-        suelo.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        suelo.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        newsuelo.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        newsuelo.gameObject.GetComponent<Rigidbody>().useGravity = true;
         yield return new WaitForSeconds(8);
-        Destroy(suelo);
+        Destroy(newsuelo);
     }
 
     void crearSueloInicial()
