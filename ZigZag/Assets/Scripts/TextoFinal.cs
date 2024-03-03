@@ -12,12 +12,11 @@ public class TextoFinal : MonoBehaviour
     void Start()
     {
         puntuacion = PlayerPrefs.GetInt("contadorPuntos", 0);
-        texto.text = "Puntos: " + puntuacion;
+        texto.text = puntuacion + " puntos !";
     }
 
     // Update is called once per frame
     void Update()
     {
-        texto.text = "Puntos: " + puntuacion;
     }
 }
