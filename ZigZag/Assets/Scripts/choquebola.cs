@@ -17,10 +17,18 @@ public class choquebola : MonoBehaviour
         
     }
 
-    void OnDestroy()
-    {
+    private void OnDisable() {
+        if(!this.gameObject.scene.isLoaded) return;
         Vector3 posactual = new Vector3(transform.position.x, 0.5f, transform.position.z);
         Instantiate(particulas, posactual, particulas.transform.rotation);
-        Debug.Log("se destruye");
+    }
+    void OnDestroy()
+    {
+        Invoke("DestroyParticulas", 0.1f);
+    }
+
+    void DestroyParticulas()
+    {
+        Destroy(particulas);
     }
 }

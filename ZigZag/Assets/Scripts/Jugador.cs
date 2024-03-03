@@ -117,10 +117,11 @@ public class Jugador : MonoBehaviour
        
         SceneManager.LoadScene("GameOver");
     }
-    
-    public void GuardarDatosAlFinalDeLaEscena()
-    {
-        PlayerPrefs.SetInt("contadorPuntos", puntos);
-    }
 
+   void OnDisable() {
+        
+        PlayerPrefs.SetInt("contadorPuntos", puntos);
+        PlayerPrefs.Save();
+    }
+    
 }
