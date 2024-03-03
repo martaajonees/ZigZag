@@ -22,10 +22,10 @@ public class Jugador : MonoBehaviour
 
     void Start()
     {
+        string EscenaActual = SceneManager.GetActiveScene().name;
         rb = GetComponent<Rigidbody>();
         offset = camara.transform.position - transform.position;
         posicionInicial = transform.position; // Guarda la posición inicial
-
     }
 
     void Update()
@@ -118,4 +118,9 @@ public class Jugador : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
     
+    public void GuardarDatosAlFinalDeLaEscena()
+    {
+        PlayerPrefs.SetInt("contadorPuntos", puntos);
+    }
+
 }
